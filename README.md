@@ -1,4 +1,4 @@
-# react-multi-select-component
+# react-single-select-component-custom-search
 
 this is a customised version of react-multi-select-component [react-multi-select-component](https:github.com/hc-oss/react-multi-select-component)
 
