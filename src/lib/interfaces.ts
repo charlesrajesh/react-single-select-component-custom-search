@@ -38,4 +38,5 @@ export interface SelectProps {
   selectPanelLabel?: string;
   onClear?;
   onSearch?;
+  onBlurSelectPanel?;
 }

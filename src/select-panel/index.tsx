@@ -37,6 +37,7 @@ const SelectPanel = ({ setExpanded }) => {
     debounceDuration,
     selectPanelLabel,
     onSearch,
+    onBlurSelectPanel,
   } = useMultiSelect();
 
   const listRef = useRef<any>();
@@ -70,6 +71,7 @@ const SelectPanel = ({ setExpanded }) => {
     setFocusIndex(index);
     onChange(option);
     setExpanded(false);
+    onBlurSelectPanel();
   };
 
   const handleSearchFocus = () => {

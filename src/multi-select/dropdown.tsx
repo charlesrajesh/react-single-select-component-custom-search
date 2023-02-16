@@ -30,11 +30,13 @@ const Dropdown = () => {
     defaultIsOpen,
     ClearSelectedIcon,
     closeOnChangedValue,
+    onBlurSelectPanel,
   } = useMultiSelect();
 
   useEffect(() => {
     if (closeOnChangedValue) {
       setExpanded(false);
+      onBlurSelectPanel();
     }
   }, [value]);
 
@@ -53,6 +55,8 @@ const Dropdown = () => {
     if (defaultIsOpen === undefined && typeof isOpen === "boolean") {
       setIsInternalExpand(false);
       setExpanded(isOpen);
+      if (!isOpen)
+        onBlurSelectPanel();
     }
   }, [isOpen]);
 
@@ -68,6 +72,7 @@ const Dropdown = () => {
     if (isInternalExpand) {
       if (e.code === KEY.ESCAPE) {
         setExpanded(false);
+        onBlurSelectPanel();
         wrapper?.current?.focus();
       } else {
         setExpanded(true);
@@ -82,6 +87,7 @@ const Dropdown = () => {
 
   const handleHover = (iexpanded: boolean) => {
     isInternalExpand && shouldToggleOnHover && setExpanded(iexpanded);
+    isInternalExpand && shouldToggleOnHover && !iexpanded && onBlurSelectPanel();
   };
 
   const handleFocus = () => !hasFocus && setHasFocus(true);
@@ -90,6 +96,7 @@ const Dropdown = () => {
     if (!e.currentTarget.contains(e.relatedTarget) && isInternalExpand) {
       setHasFocus(false);
       setExpanded(false);
+      onBlurSelectPanel();
     }
   };
 
@@ -101,6 +108,7 @@ const Dropdown = () => {
     e.preventDefault();
     e.stopPropagation();
     isInternalExpand && setExpanded(isLoading || disabled ? false : !expanded);
+    isInternalExpand && (isLoading || disabled ? onBlurSelectPanel() : (!expanded && onBlurSelectPanel()));
   };
 
   const handleClearSelected = (e) => {
@@ -108,6 +116,7 @@ const Dropdown = () => {
     onChange(null);
     onClear();
     isInternalExpand && setExpanded(false);
+    isInternalExpand && onBlurSelectPanel();
   };
 
   return (
